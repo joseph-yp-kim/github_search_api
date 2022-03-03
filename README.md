@@ -8,3 +8,4 @@
 6. Install the client dependencies by opening a shell in the root directory and running `cd client/` then `npm i`.
 7. Start the React application by running `npm start` in the shell from step #7
 8. The application should now be running on [http://localhost:3000](http://localhost:3000)
+9. Start searching for Github repos!
