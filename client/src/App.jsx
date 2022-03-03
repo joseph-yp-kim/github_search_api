@@ -3,6 +3,13 @@ import './App.css';
 import RepoList from './RepoList';
 import styled from 'styled-components';
 
+const SearchInputWrapper = styled.div`
+  height: 53px;
+  width: 522px;
+  margin: 0px auto;
+  text-align: left;
+`;
+
 const SearchInput = styled.input`
   margin-top: 20px;
   width: 393px;
@@ -24,6 +31,11 @@ const ClearSearchButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const ResultsContainer = styled.div`
+  height: 100%;
+  overflow: scroll;
 `;
 
 function App() {
@@ -65,14 +77,16 @@ function App() {
 
   return (
     <div className='app'>
-      <SearchInput
-        value={searchInput}
-        onChange={handleSearchInputChange}
-        placeholder={'Search for Github repos by star ranking'}
-      />
-      {didAttemptSearch && (
-        <ClearSearchButton onClick={handleClearSearchClick}>Clear search</ClearSearchButton>
-      )}
+      <SearchInputWrapper>
+        <SearchInput
+          value={searchInput}
+          onChange={handleSearchInputChange}
+          placeholder={'Search for Github repos by star ranking'}
+        />
+        {didAttemptSearch && (
+          <ClearSearchButton onClick={handleClearSearchClick}>Clear search</ClearSearchButton>
+        )}
+      </SearchInputWrapper>
       {isLoading && <p>loading results...</p>}
       {!isLoading && didAttemptSearch && !repos.length && <p>Sorry... no matching results found</p>}
       {!isLoading && <RepoList repos={repos} />}
