@@ -11,12 +11,12 @@ const RepoDescription = styled.p`
   margin: 0px;
 `;
 
-function SearchResults({ repos }) {
+function RepoList({ repos }) {
   const handleItemClick = (url) => {
     window.open(url);
   };
 
-  const repoList = repos.map((repo, i) => (
+  const repoItems = repos.map((repo, i) => (
     <RepoItem key={i} onClick={() => handleItemClick(repo.url)}>
       <RepoDescription>
         {repo.name} by {repo.owner}
@@ -26,7 +26,7 @@ function SearchResults({ repos }) {
     </RepoItem>
   ));
 
-  return <ul>{repoList}</ul>;
+  return <ul>{repoItems}</ul>;
 }
 
-export default SearchResults;
+export default RepoList;

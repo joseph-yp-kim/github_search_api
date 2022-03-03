@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import SearchResults from './SearchResults';
+import RepoList from './RepoList';
 import styled from 'styled-components';
 
 const SearchInput = styled.input`
@@ -15,7 +15,7 @@ const SearchInput = styled.input`
 `;
 
 function App() {
-  const [searchResults, setSearchResults] = useState([]);
+  const [repos, setRepos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [didAttemptSearch, setDidAttemptSearch] = useState(false);
 
@@ -25,21 +25,21 @@ function App() {
     const searchInputText = e.target.value;
     searchTimeout = setTimeout(() => {
       if (!searchInputText) {
-        setSearchResults([]);
+        setRepos([]);
         setIsLoading(false);
         setDidAttemptSearch(false);
         return;
       }
-      fetchRepos(searchInputText);
+      searchRepos(searchInputText);
     }, 500);
   };
 
-  const fetchRepos = async (query) => {
+  const searchRepos = async (query) => {
     setIsLoading(true);
     setDidAttemptSearch(true);
     const res = await fetch(`/api/github/repos?q=${query}`);
     const results = await res.json();
-    setSearchResults(results);
+    setRepos(results);
     setIsLoading(false);
   };
 
@@ -50,10 +50,8 @@ function App() {
         placeholder={'Search for Github repos by star ranking'}
       />
       {isLoading && <p>loading results...</p>}
-      {!isLoading && didAttemptSearch && !searchResults.length && (
-        <p>Sorry... no matching results found</p>
-      )}
-      {!isLoading && <SearchResults repos={searchResults} />}
+      {!isLoading && didAttemptSearch && !repos.length && <p>Sorry... no matching results found</p>}
+      {!isLoading && <RepoList repos={repos} />}
     </div>
   );
 }
