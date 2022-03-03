@@ -33,11 +33,6 @@ const ClearSearchButton = styled.button`
   }
 `;
 
-const ResultsContainer = styled.div`
-  height: 100%;
-  overflow: scroll;
-`;
-
 function App() {
   const [repos, setRepos] = useState([]);
   const [searchInput, setSearchInput] = useState('');
