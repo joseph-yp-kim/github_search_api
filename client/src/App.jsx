@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const SearchInput = styled.input`
   margin-top: 20px;
-  width: 400px;
+  width: 393px;
   height: 30px;
   border-radius: 6px;
   border: 1px solid #d1d7dd;
@@ -16,15 +16,27 @@ const SearchInput = styled.input`
   }
 `;
 
+const ClearSearchButton = styled.button`
+  border-radius: 6px;
+  border: 1px solid #d1d7dd;
+  padding: 7.5px 12px;
+  margin-left: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 function App() {
   const [repos, setRepos] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [didAttemptSearch, setDidAttemptSearch] = useState(false);
 
   let searchTimeout;
   const handleSearchInputChange = (e) => {
-    clearTimeout(searchTimeout);
     const searchInputText = e.target.value;
+    setSearchInput(searchInputText);
+    clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
       if (!searchInputText) {
         setRepos([]);
@@ -45,12 +57,22 @@ function App() {
     setIsLoading(false);
   };
 
+  const handleClearSearchClick = () => {
+    setSearchInput('');
+    setRepos([]);
+    setDidAttemptSearch(false);
+  };
+
   return (
     <div className='app'>
       <SearchInput
+        value={searchInput}
         onChange={handleSearchInputChange}
         placeholder={'Search for Github repos by star ranking'}
       />
+      {didAttemptSearch && (
+        <ClearSearchButton onClick={handleClearSearchClick}>Clear search</ClearSearchButton>
+      )}
       {isLoading && <p>loading results...</p>}
       {!isLoading && didAttemptSearch && !repos.length && <p>Sorry... no matching results found</p>}
       {!isLoading && <RepoList repos={repos} />}
