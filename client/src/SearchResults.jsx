@@ -12,8 +12,12 @@ const RepoDescription = styled.p`
 `;
 
 function SearchResults({ repos }) {
+  const handleItemClick = (url) => {
+    window.open(url);
+  };
+
   const repoList = repos.map((repo, i) => (
-    <RepoItem key={i}>
+    <RepoItem key={i} onClick={() => handleItemClick(repo.url)}>
       <RepoDescription>
         {repo.name} by {repo.owner}
       </RepoDescription>
