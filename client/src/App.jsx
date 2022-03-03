@@ -4,9 +4,10 @@ import RepoList from './RepoList';
 import styled from 'styled-components';
 
 const SearchInput = styled.input`
+  margin-top: 20px;
   width: 400px;
   height: 30px;
-  border-radius: 5px;
+  border-radius: 3px;
   border: none;
   padding: 0px 5px;
   &:focus {
