@@ -15,7 +15,7 @@ const List = styled.ul`
 `;
 
 const RepoItem = styled.li`
-  border: 1px solid black;
+  border: 1px solid #d1d7dd;
   border-radius: 3px;
   text-align: left;
   margin-bottom: 10px;
@@ -24,15 +24,24 @@ const RepoItem = styled.li`
   position: relative;
   left: 0;
   width: 500px;
+  background-color: #f6f8fa;
   &:hover {
     cursor: pointer;
     left: -10px;
-    background-color: #202124;
   }
 `;
 
-const RepoDescription = styled.p`
-  margin: 0px;
+const RepoText = styled.p`
+  margin-top: 0px;
+  margin-bottom: 5px;
+`;
+
+const RepoOwnerText = styled.span`
+  color: #2a6bd3;
+`;
+
+const RepoNameText = styled(RepoOwnerText)`
+  font-weight: bold;
 `;
 
 function RepoList({ repos }) {
@@ -42,11 +51,14 @@ function RepoList({ repos }) {
 
   const repoItems = repos.map((repo, i) => (
     <RepoItem key={i} onClick={() => handleItemClick(repo.url)}>
-      <RepoDescription>
-        {repo.name} by {repo.owner}
-      </RepoDescription>
-      <RepoDescription>{repo.description}</RepoDescription>
-      <RepoDescription>Stars: {repo.starCount}</RepoDescription>
+      <RepoText>
+        Repo: <RepoNameText>{repo.name}</RepoNameText>
+      </RepoText>
+      <RepoText>
+        Owner: <RepoOwnerText>{repo.owner}</RepoOwnerText>
+      </RepoText>
+      <RepoText>Stars: {repo.starCount}</RepoText>
+      <RepoText>About: {repo.description}</RepoText>
     </RepoItem>
   ));
 
