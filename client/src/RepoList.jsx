@@ -16,7 +16,7 @@ const List = styled.ul`
 
 const RepoItem = styled.li`
   border: 1px solid #d1d7dd;
-  border-radius: 3px;
+  border-radius: 6px;
   text-align: left;
   margin-bottom: 10px;
   padding: 10px;
