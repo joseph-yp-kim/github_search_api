@@ -8,8 +8,7 @@ const app = express();
 
 app.get('/api/github/repos', async (req, res, next) => {
   try {
-    const search = req.query.search;
-    const results = await githubUtils.getGithubReposByStars(search);
+    const results = await githubUtils.searchGithubReposSortByStars(req.query.q);
     res.json(results);
   } catch (err) {
     next(err);

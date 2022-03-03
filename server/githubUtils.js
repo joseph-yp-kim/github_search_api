@@ -2,10 +2,10 @@ const axios = require('axios');
 
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN;
 
-async function getGithubReposByStars(search) {
+async function searchGithubReposSortByStars(query) {
   const response = await axios({
     method: 'get',
-    url: `https://api.github.com/search/repositories?q=${search}&sort=stars`,
+    url: `https://api.github.com/search/repositories?q=${query}&sort=stars`,
     headers: {
       Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`,
       'Content-Type': 'application/json',
@@ -23,4 +23,4 @@ async function getGithubReposByStars(search) {
   });
 }
 
-exports.getGithubReposByStars = getGithubReposByStars;
+exports.searchGithubReposSortByStars = searchGithubReposSortByStars;

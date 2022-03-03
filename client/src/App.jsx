@@ -1,6 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import SearchResults from './SearchResults';
+import styled from 'styled-components';
+
+const SearchInput = styled.input`
+  width: 400px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  padding: 0px 5px;
+  &:focus {
+    outline: none;
+  }
+`;
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -12,7 +24,6 @@ function App() {
     clearTimeout(searchTimeout);
     const searchInputText = e.target.value;
     searchTimeout = setTimeout(() => {
-      console.log('====>', searchInputText);
       if (!searchInputText) {
         setSearchResults([]);
         setIsLoading(false);
@@ -26,23 +37,23 @@ function App() {
   const fetchRepos = async (query) => {
     setIsLoading(true);
     setDidAttemptSearch(true);
-    const res = await fetch(`/api/github/repos?search=${query}`);
+    const res = await fetch(`/api/github/repos?q=${query}`);
     const results = await res.json();
     setSearchResults(results);
     setIsLoading(false);
-    console.log('results:', results);
   };
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <input onChange={handleSearchInputChange}></input>
-        {isLoading && <span>loading results...</span>}
-        {!isLoading && didAttemptSearch && !searchResults.length && (
-          <span>Sorry... no matching results found</span>
-        )}
-        {!isLoading && <SearchResults repos={searchResults} />}
-      </header>
+    <div className='app'>
+      <SearchInput
+        onChange={handleSearchInputChange}
+        placeholder={'Search for Github repos by star ranking'}
+      />
+      {isLoading && <p>loading results...</p>}
+      {!isLoading && didAttemptSearch && !searchResults.length && (
+        <p>Sorry... no matching results found</p>
+      )}
+      {!isLoading && <SearchResults repos={searchResults} />}
     </div>
   );
 }
