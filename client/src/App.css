@@ -5,10 +5,3 @@ body,
   height: 100%;
   overflow: hidden;
 }
-
-.app {
-  text-align: center;
-  background-color: white;
-  color: #25292e;
-  font-family: Helvetica;
-}

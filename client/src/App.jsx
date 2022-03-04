@@ -1,7 +1,17 @@
 import { useState } from 'react';
-import './App.css';
-import RepoList from './RepoList';
 import styled from 'styled-components';
+import { DebounceInput } from 'react-debounce-input';
+import RepoList from './RepoList';
+import './App.css';
+
+const AppContainer = styled.div`
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  background-color: white;
+  color: #25292e;
+  font-family: Helvetica;
+`;
 
 const SearchInputWrapper = styled.div`
   height: 53px;
@@ -10,7 +20,7 @@ const SearchInputWrapper = styled.div`
   text-align: left;
 `;
 
-const SearchInput = styled.input`
+const SearchInput = styled(DebounceInput)`
   margin-top: 20px;
   width: 393px;
   height: 30px;
@@ -39,20 +49,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [didAttemptSearch, setDidAttemptSearch] = useState(false);
 
-  let searchTimeout;
   const handleSearchInputChange = (e) => {
     const searchInputText = e.target.value;
     setSearchInput(searchInputText);
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      if (!searchInputText) {
-        setRepos([]);
-        setIsLoading(false);
-        setDidAttemptSearch(false);
-        return;
-      }
-      searchRepos(searchInputText);
-    }, 500);
+    if (!searchInputText) {
+      setRepos([]);
+      setIsLoading(false);
+      setDidAttemptSearch(false);
+      return;
+    }
+    searchRepos(searchInputText);
   };
 
   const searchRepos = async (query) => {
@@ -71,9 +77,10 @@ function App() {
   };
 
   return (
-    <div className='app'>
+    <AppContainer>
       <SearchInputWrapper>
         <SearchInput
+          debounceTimeout={500}
           value={searchInput}
           onChange={handleSearchInputChange}
           placeholder={'Search for Github repos by star ranking'}
@@ -85,7 +92,7 @@ function App() {
       {isLoading && <p>loading results...</p>}
       {!isLoading && didAttemptSearch && !repos.length && <p>Sorry... no matching results found</p>}
       {!isLoading && <RepoList repos={repos} />}
-    </div>
+    </AppContainer>
   );
 }
 
